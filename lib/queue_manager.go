@@ -265,10 +265,7 @@ func (m *QueueManager) DiscordRequestHandler(resp http.ResponseWriter, req *http
 	metricsPath := GetMetricsPath(req.URL.Path)
 
 	token := req.Header.Get("Authorization")
-    clientId := ""
-    if clientId == "" {
-    	clientId = GetBotId(token)
-    }
+    clientId := GetBotId(token)
 
 	ConnectionsOpen.With(map[string]string{"route": metricsPath, "method": req.Method, "clientId": clientId}).Inc()
 	defer ConnectionsOpen.With(map[string]string{"route": metricsPath, "method": req.Method, "clientId": clientId}).Dec()
